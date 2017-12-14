@@ -15,7 +15,12 @@ namespace Notifications.Controllers
             var result = objRepo.GetData();
             return View();
         }
-
+        public JsonResult Values()
+        {
+            NotificationRepo objRepo = new NotificationRepo();
+            // return new JsonResult()
+            return Json(objRepo.GetData(), JsonRequestBehavior.AllowGet);
+        }
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";

@@ -1,31 +1,62 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    Layout = null;
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
+<!DOCTYPE html>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>JobStatus</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    <script src="http://ajax.aspnetcdn.com/ajax/signalr/jquery.signalr-1.0.1.min.js"></script>
+    <script src="~/signalr/hubs" type="text/javascript"></script>
+    <script type="text/javascript">
+
+        $(function () {
+
+            // Proxy created on the fly
+            
+            var job = $.connection.nitificationHub;
+
+            // Declare a function on the job hub so the server can invoke it
+            job.client.broadcastMessage = function (payLoad) {
+                console.log(payLoad);
+            };
+
+            // Start the connection
+            $.connection.hub.start();
+            getData();
+        });
+
+        function getData() {
+            //var $tbl = $('#tblJobInfo');
+            //$.ajax({
+            //    url: '../home/Values',
+            //    type: 'GET',
+            //    datatype: 'json',
+            //    success: function (data) {
+            //        if (data.length > 0) {
+            //            $tbl.empty();
+            //            $tbl.append(' <tr><th>ID</th><th>Name</th><th>Last Executed Date</th><th>Status</th></tr>');
+            //            var rows = [];
+            //            for (var i = 0; i < data.length; i++) {
+            //                rows.push(' <tr><td>' + data[i].Id + '</td><td>' + data[i].UserId + '</td><td>' +
+            //                    data[i].Text + '</td><td>' + data[i].CreatedDate + '</td></tr>');
+            //            }
+            //            $tbl.append(rows.join(''));
+            //        }
+            //    }
+            //});
+
+        }
+    </script>
+</head>
+<body>
+    <div>
+        <table id="tblJobInfo" style="text-align:center;margin-left:10px"></table>
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>
+</body>
+</html>

@@ -26,7 +26,7 @@ namespace Notifications.Models
                     command.Notification = null;
 
                     SqlDependency dependency = new SqlDependency(command);
-                    
+
                     dependency.OnChange += new OnChangeEventHandler(dependency_OnChange);
 
                     if (connection.State == ConnectionState.Closed)
@@ -36,9 +36,9 @@ namespace Notifications.Models
                         return reader.Cast<IDataRecord>()
                             .Select(x => new Notifications()
                             {
-                             //   Id = x.GetInt32(0),
+                                //   Id = x.GetInt32(0),
                                 Text = x.GetString(1),
-                              //  CreatedDate = x.GetDateTime(3),
+                                //  CreatedDate = x.GetDateTime(3),
                                 //UserId = x.GetInt32(2)
                             }).ToList();
 
@@ -49,8 +49,8 @@ namespace Notifications.Models
         }
         private void dependency_OnChange(object sender, SqlNotificationEventArgs e)
         {
-            GetData();
-            NitificationHub.Show();
+            var result = GetData();
+            NitificationHub.Show(result);
         }
     }
 
