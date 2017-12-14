@@ -10,12 +10,10 @@ namespace Notifications
     public class NitificationHub : Hub
     {
 
-        public static string Show(IEnumerable<Notifications.Models.Notifications> payload)
+        public static void Show(IEnumerable<Notifications.Models.Notifications> payload)
         {
             IHubContext context = GlobalHost.ConnectionManager.GetHubContext<NitificationHub>();
             context.Clients.All.broadcastMessage(payload);
-            
-            return "Change Detected";
         }
     }
 }
